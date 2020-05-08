@@ -1,0 +1,72 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:{} arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:nil date:t e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:noil title:t toc:t todo:t |:t
+#+title: bbdb-deusmax README
+#+date: <2020-05-08 Fri>
+#+author: Deus Max
+#+email: deusmax@gmx.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.50 (Org mode 9.3.6)
+
+#+options: html-scripts:t html-style:t html5-fancy:t
+#+html_doctype: html5
+#+subtitle: Personal customizations for bbdb-mua under gnus
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.0.50 (<a href="https://orgmode.org">Org</a> mode 9.3.6)
+#+latex_header:
+
+* Introduction
+
+  BBDB customizations.
+
+  The customizations here affect the automatic collection and updates of bbdb
+  names.
+
+* Description
+
+** Swapped first-name second-name
+
+   There is certainly a lot of freedom in the email display name. Bbdb keeps trying
+   to update the record, when names are swapped. This occurs so frequently, it
+   quickly becomes tedious.
+   
+   The function =bbdb-deusmax-add-name= used during a bbdb-record update, checks
+   that the new name is not a simple swap of first-name with second-name. If it is,
+   it stops the update process.
+
+   This simple check, will save a lot of /AKA: 2nd-name 1st-name entries/ just to
+   quiet the bbdb query process.
+
+** Extend =bbdb-ignore= 
+
+   The customize variables =bbdb-ignore-*= control when not to grab email info to
+   create a bbdb entry. Here the additional variables =bbdb-deusmax-ignore-groups=
+   and =bbdb-deusmax-ignore-group-level= provide additional ignore options.
+
+   The library =bbdb-mua= sets, by default, the customize variable
+   =bbdb-mua-auto-update-p= to =bbdb-select-message=. Using customize, my setup sets
+   it to function =bbdb-deusmax-select-message=. This function makes use of the
+   customize list =bbdb-deusmax-ignore-groups= and
+   =bbdb-deusmax-ignore-group-level=.
+
+   Using these, bbdb can ignore emails for the groups:
+     1. matching a regex on the list or
+     2. At a group level and above (the higher, the less important. Default 4)
+
+   This is gnus specific as it uses gnus specific features.
+
+* Usage
+
+  Set the following customize variables, preferably using the customize interface:
+
+  #+begin_src emacs-lisp
+    (require 'bbdb-deusmax)
+    (setq bbdb-add-name 'bbdb-deusmax-add-name)
+    (setq bbdb-mua-auto-update-p 'bbdb-deusmax-select-message)
+  #+end_src
+
+* License
+
+  GPLv3 or later. See LICENSE.

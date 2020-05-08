@@ -27,7 +27,7 @@
 
 ;;; Commentary:
 ;;
-;; My bbdb customizations, mostly for bbdb-mua.
+;; My bbdb customizations.
 ;;
 ;; Currently my customizations affect the automatic collection and updates
 ;; of bbdb names.
@@ -36,7 +36,7 @@
 ;; the new name is not a simple swap of first-name with second-name.
 ;;
 ;; Bbdb-mua sets, by default, the customize variable bbdb-mua-auto-update-p to
-;; bbdb-select-message. Using customize, my setup set it to function
+;; bbdb-select-message. Using customize, my setup sets it to function
 ;; bbdb-deusmax-select-message. This function makes use of the customize list 
 ;; bbdb-deusmax-ignore-groups and bbdb-deusmax-ignore-group-level. Using these I can
 ;; ignore emails for the groups:
@@ -58,6 +58,7 @@
 
 ;;; Code:
 ;;
+(require 'gnus)
 (require 'bbdb)
 (require 'bbdb-mua)
 
