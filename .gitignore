@@ -6,6 +6,13 @@
 
 # Backup files
 *~
+*.bkp
+*.orig
+
+# misc
+README.html
+scratch.txt
+*test*
 
 # Undo-tree save-files
 *.~undo-tree
