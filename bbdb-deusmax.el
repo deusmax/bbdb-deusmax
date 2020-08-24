@@ -89,7 +89,7 @@ Reject the simple case where first and last names are swapped.
 This seems to be very common with email. Otherwise, use the
 standard bbdb query."
   (setq newname (bbdb-split " " newname))
-  (if (string= (bbdb-record-name record) (concat (second newname) " " (first newname)))
+  (if (string= (bbdb-record-name record) (concat (cl-second newname) " " (cl-first newname)))
       nil
     'query))
 
