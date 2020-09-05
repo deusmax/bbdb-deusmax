@@ -84,12 +84,22 @@ exclude groups at levels 4, 5 and 6. Used in function
   :type 'integer)
 
 (defun bbdb-deusmax-add-name (record newname)
-  "Check NEWNAME to add to existing bbdb RECORD.
-Reject the simple case where first and last names are swapped.
-This seems to be very common with email. Otherwise, use the
-standard bbdb query."
-  (setq newname (bbdb-split " " newname))
-  (if (string= (bbdb-record-name record) (concat (cl-second newname) " " (cl-first newname)))
+  "Check NEWNAME for adding to existing bbdb RECORD name.
+Reject the simple cases, where name elements are in different
+order. This seems to be very common with names provided in email.
+Otherwise, use the standard bbdb query. This function ignores
+case.
+It works by spliting the provided names to a list and sorts the
+results. Then each list is re-joined to a string. Function
+`mapcar' returns the results as a list from which duplicate names
+are removed. If the names are the same, only 1 string should be
+left."
+  (if (eq 1
+          (length
+           (delete-dups
+            (mapcar (lambda (name)
+                      (string-join (sort (bbdb-split " " (replace-regexp-in-string "[,.']" "" (downcase name))) #'string<) " "))
+                    (list (bbdb-record-name record) newname)))))
       nil
     'query))
 
@@ -102,4 +112,5 @@ Used for `bbdb-mua-auto-update-p'."
    (t (bbdb-select-message))))
 
 (provide 'bbdb-deusmax)
+
 ;;; bbdb-deusmax ends here.
